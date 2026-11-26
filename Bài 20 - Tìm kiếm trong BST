@@ -1,0 +1,60 @@
+#include <iostream>
+using namespace std;
+struct Node{
+    int data;
+    Node* left;
+    Node* right;
+};
+
+Node* createNode(int data){
+    Node* p = new Node();
+    p-> data = data;
+    p-> left = NULL;
+    p->right = NULL;
+    return p;
+}
+
+void insertNode(Node*& root, Node* newNode){
+    if(root == NULL){
+        root = newNode;
+        return;
+    }
+    if(newNode->data < root->data){
+        insertNode(root->left, newNode);
+    }else{
+        insertNode(root->right,newNode);
+    }
+}
+
+bool TimKiem(Node* root, int x){
+    if(root == NULL) return false;
+    if(root->data == x) return true;
+    if(x < root->data){
+        return TimKiem(root->left, x);
+    }return TimKiem(root->right, x);
+}
+
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(0);
+    Node* root = NULL;
+    int n;
+    cin >> n;
+    for (int i = 0; i < n; i++) {
+        int data;
+        cin >> data;
+        insertNode(root, createNode(data));
+    }
+    int q;
+    cin >> q;
+
+    for (int i = 0; i < q; i++) {
+        int x;
+        cin >> x;
+        if (TimKiem(root, x)) {
+            cout << "YES\n";
+        } else {
+            cout << "NO\n";
+        }
+    }
+}
