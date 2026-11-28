@@ -1,0 +1,63 @@
+#include <iostream>
+using namespace std;
+
+class node{
+public:
+    int data;
+    node* left;
+    node* right;
+
+    node(int x){
+        data = x;
+        left = right = nullptr;
+    }
+};
+
+node* insert(node* root, int x){
+    if(root == nullptr){
+        return new node(x);
+    }
+
+    if(x < root->data){
+        root->left = insert(root->left, x);
+    }
+    else{
+        root->right = insert(root->right, x);
+    }
+
+    return root;
+}
+
+int findMin(node* root){
+    while(root->left != nullptr){
+        root = root->left;
+    }
+    return root->data;
+}
+
+int findMax(node* root){
+    while(root->right != nullptr){
+        root = root->right;
+    }
+    return root->data;
+}
+
+int main(){
+    ios_base::sync_with_stdio(false);
+    cin.tie(nullptr);
+
+    int n;
+    cin >> n;
+
+    node* root = nullptr;
+
+    for(int i = 0; i < n; i++){
+        int x;
+        cin >> x;
+        root = insert(root, x);
+    }
+
+    cout << findMin(root) << " " << findMax(root);
+
+    return 0;
+}
